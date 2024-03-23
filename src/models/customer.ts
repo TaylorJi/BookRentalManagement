@@ -26,6 +26,6 @@ let customerSchema = new mongoose.Schema({
 
 })
 
+export const Customer = mongoose.model("Customer", customerSchema, "customers"); // the last input is to set the names of the collection in the database
 
 
-module.exports = mongoose.model("Customer", customerSchema);

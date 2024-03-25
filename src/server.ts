@@ -28,14 +28,19 @@ mongoose
 app.use("/api/books", bookRouter);
 app.use("/api/books/search", bookRouter);
 app.use("/api/books/addBook", bookRouter);
+app.use("/api/books/update", bookRouter);
+app.use("/api/books/delete", bookRouter);
 
 app.use("/api/customers", customerRouter);
 app.use("/api/customers/search", customerRouter);
 app.use("/api/customers/addCustomer", customerRouter);
+app.use("/api/customers/update", customerRouter);
+app.use("/api/customers/delete", customerRouter);
 
 app.use("/api/genres", genreRouter);
 app.use("/api/genres/search", genreRouter);
 app.use("/api/genres/addGenre", genreRouter);
+app.use("/api/genres/update", genreRouter);
 
 
 

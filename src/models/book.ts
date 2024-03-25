@@ -16,6 +16,10 @@ let bookSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    is_available: {
+        type: Boolean,
+        default: true
+    }
 
 })
 

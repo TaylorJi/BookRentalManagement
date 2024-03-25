@@ -28,6 +28,7 @@ genreRouter.get('/', async (req: Request, res: Response) => {
   })
 
 
+  // search by genre 
   genreRouter.get('/search', async (req: Request, res: Response) => {
     const {genre} = req.query; // get the title from the query
     console.log('Fetching genres from the database');
@@ -54,6 +55,7 @@ genreRouter.get('/', async (req: Request, res: Response) => {
         }
   });
 
+  // add a genre
   genreRouter.post('/', async (req: Request, res: Response) => {
     try {
         const {genre} = req.body;
@@ -72,3 +74,35 @@ genreRouter.get('/', async (req: Request, res: Response) => {
       console.error('Error while adding genre:', error);
       res.status(500).send('Error while adding genre' + error);
     }});
+
+    // update a genre
+    genreRouter.put('/:id', async (req: Request, res: Response) => {
+        try {
+            const {genre} = req.body;
+            const {id} = req.params;
+            const genreToUpdate = await Genre.findByIdAndUpdate(id, {genre}, {new: true});
+            console.log('Genre updated successfully');
+            res.status(200).json({
+                message: 'Genre updated successfully',
+                genre: genreToUpdate
+            });
+        } catch (error) {
+            console.error('Error while updating genre:', error);
+            res.status(500).send('Error while updating genre' + error);
+        }
+    });
+
+    // delete a genre
+    genreRouter.delete('/:id', async (req: Request, res: Response) => {
+        try {
+            const {id} = req.params;
+            await Genre.findByIdAndDelete(id);
+            console.log('Genre deleted successfully');
+            res.status(200).json({
+                message: 'Genre deleted successfully'
+            });
+        } catch (error) {
+            console.error('Error while deleting genre:', error);
+            res.status(500).send('Error while deleting genre' + error);
+        }
+    });

@@ -7,6 +7,7 @@ import { Customer } from "../models/customer"
 export const customerRouter = Router();
 
 
+// get all customers
 customerRouter.get('/', async (req: Request, res: Response) => {
     console.log('Fetching books from the database');
     try {
@@ -24,7 +25,7 @@ customerRouter.get('/', async (req: Request, res: Response) => {
     }
   })
 
-
+    // search by name
   customerRouter.get('/search', async (req: Request, res: Response) => {
     const {name} = req.query; // get the title from the query
     console.log('Fetching books from the database');
@@ -51,6 +52,7 @@ customerRouter.get('/', async (req: Request, res: Response) => {
         }
   });
 
+  // add a customer
   customerRouter.post('/', async (req: Request, res: Response) => {
     try {
         const {name, contact, address, note, late_fee} = req.body;
@@ -74,3 +76,44 @@ customerRouter.get('/', async (req: Request, res: Response) => {
       console.error('Error while adding genre:', error);
       res.status(500).send('Error while adding genre' + error);
     }});
+
+    // update a customer
+    customerRouter.put('/update/:id', async (req: Request, res: Response) => {
+        try {
+            const {name, contact, address, note, late_fee} = req.body;
+            const {id} = req.params;
+            const customer = await Customer.findByIdAndUpdate(id, {name, contact, address, note, late_fee}, {new: true});
+    
+            if (!customer) {
+                return res.status(404).json({
+                    message: 'Customer not found'
+                });
+            }
+    
+            console.log(`${customer.name} has been updated successfully`);
+            res.status(200).json({
+                message: `${customer.name} has been updated successfully`,
+                customer
+            });
+        } catch (error) {
+            console.error('Error while updating customer:', error);
+            res.status(500).send('Error while updating customer' + error);
+        }
+    });
+
+
+    // delete a customer
+    customerRouter.delete('/:id', async (req: Request, res: Response) => {
+        try {
+            const {id} = req.params;
+            await Customer.findByIdAndDelete(id);
+            console.log('Customer has been deleted successfully');
+            res.status(200).json({
+                message: 'Customer has been deleted successfully'
+            }); // send an empty object
+            
+        } catch (error) {
+            console.error('Error while deleting customer:', error);
+            res.status(500).send('Error while deleting customer' + error);
+        }
+    });

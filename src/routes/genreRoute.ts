@@ -1,19 +1,21 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { Book } from "../models/book"
+import { Genre } from "../models/genre"
 
 
 
-export const bookRouter = Router();
+export const genreRouter = Router();
 
 
 
-bookRouter.get('/', async (req: Request, res: Response) => {
-    console.log('Fetching books from the database');
+
+
+genreRouter.get('/', async (req: Request, res: Response) => {
+    console.log('Fetching genres from the database');
     try {
-      const books = await Book.find({});
-      console.log(`Found ${books.length} books`);
-      res.status(200).json(books);
+      const genres = await Genre.find({});
+      console.log(`Found ${genres.length} genres`);
+      res.status(200).json(genres);
     } catch (error) {
         if (error instanceof Error) {
             console.error('Error while fetching listings:', error);
@@ -26,21 +28,21 @@ bookRouter.get('/', async (req: Request, res: Response) => {
   })
 
 
-  bookRouter.get('/search', async (req: Request, res: Response) => {
-    const {title} = req.query; // get the title from the query
-    console.log('Fetching books from the database');
-    if (title === undefined || title === '' || typeof title !== 'string') {
+  genreRouter.get('/search', async (req: Request, res: Response) => {
+    const {genre} = req.query; // get the title from the query
+    console.log('Fetching genres from the database');
+    if (genre === undefined || genre === '' || typeof genre !== 'string') {
         res.status(400).send('Invalid title');
         return;
         }
         try {
-            const books = await Book.find({title: {$regex: title, $options: 'i'}});
-            console.log(`Found ${books.length} books`);
-            if (books.length === 0) {
+            const genres = await Genre.find({genre: {$regex: genre, $options: 'i'}});
+            console.log(`Found ${genres.length} genres`);
+            if (genres.length === 0) {
                 res.status(404).send('Book not found');
                 return;
             }
-            res.status(200).json(books);
+            res.status(200).json(genres);
         } catch (error) {
             if (error instanceof Error) {
                 console.error('Error while fetching listings:', error);
@@ -52,21 +54,19 @@ bookRouter.get('/', async (req: Request, res: Response) => {
         }
   });
 
-  bookRouter.post('/addBook', async (req: Request, res: Response) => {
+  genreRouter.post('/', async (req: Request, res: Response) => {
     try {
-        const {title, genre, rental_duration} = req.body;
-      const book = new Book({
-        title,
+        const {genre} = req.body;
+      const newGenre = new Genre({
         genre,
-        rental_duration
       });
   
-      const savedBook = await book.save();
+      const genreToAdd = await newGenre.save();
   
       console.log('Book added successfully');
       res.status(201).json({
-        message: `${savedBook.title} Book added successfully`,
-        book: savedBook
+        message: `${genreToAdd.genre } Book added successfully`,
+        genre: genreToAdd
       });
     } catch (error) {
       console.error('Error while adding genre:', error);

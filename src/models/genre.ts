@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 
 let genreSchema = new mongoose.Schema({
-    gerne: {
+    genre: {
         type: String,
         required: true
     }

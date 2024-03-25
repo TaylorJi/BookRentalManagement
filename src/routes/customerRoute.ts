@@ -6,11 +6,6 @@ import { Customer } from "../models/customer"
 
 export const customerRouter = Router();
 
-// customerRouter.get('/', async (req, res) => {
-//     res.send('Hello from customer router');
-// })
-
-
 
 customerRouter.get('/', async (req: Request, res: Response) => {
     console.log('Fetching books from the database');

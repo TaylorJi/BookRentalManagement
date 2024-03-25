@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import mongoose, { Schema, Document } from "mongoose";
 import { bookRouter } from "./routes/bookRoute"; // ts style import
 import { customerRouter } from "./routes/customerRoute";
-import { Genre } from "./models/genre"; // ts syle import
+import { genreRouter } from "./routes/genreRoute";
+// import { Genre } from "./models/genre"; // ts syle import
 
 dotenv.config();
 const app = express();
@@ -32,23 +33,11 @@ app.use("/api/customers", customerRouter);
 app.use("/api/customers/search", customerRouter);
 app.use("/api/customers/addCustomer", customerRouter);
 
+app.use("/api/genres", genreRouter);
+app.use("/api/genres/search", genreRouter);
+app.use("/api/genres/addGenre", genreRouter);
 
-app.get("/api/genres", async (req: Request, res: Response) => {
-  console.log("Fetching genres from the database");
-  try {
-    const genres = await Genre.find({});
-    console.log(`Found ${genres.length} genres`);
-    res.status(200).json(genres);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error while fetching listings:", error);
-      res.status(500).send("Error while fetching listings" + error);
-    } else {
-      console.error("Error while fetching listings:", error);
-      res.status(500).send("Error while fetching listings");
-    }
-  }
-});
+
 
 
 app.listen(port, () => {

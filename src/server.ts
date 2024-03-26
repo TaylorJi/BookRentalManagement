@@ -1,11 +1,10 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose from "mongoose";
 import { bookRouter } from "./routes/bookRoute"; // ts style import
 import { customerRouter } from "./routes/customerRoute";
 import { genreRouter } from "./routes/genreRoute";
-// import { Genre } from "./models/genre"; // ts syle import
-
+import { bookRentRouter } from "./routes/bookRentRoute";
 dotenv.config();
 const app = express();
 app.use(express.json()); // store the result in req.body
@@ -25,6 +24,7 @@ mongoose
 
 
 
+// routuers 
 app.use("/api/books", bookRouter);
 app.use("/api/books/search", bookRouter);
 app.use("/api/books/addBook", bookRouter);
@@ -41,6 +41,13 @@ app.use("/api/genres", genreRouter);
 app.use("/api/genres/search", genreRouter);
 app.use("/api/genres/addGenre", genreRouter);
 app.use("/api/genres/update", genreRouter);
+
+app.use("/api/bookRents", bookRentRouter);
+app.use("/api/bookRents/searchByCustomer", bookRentRouter);
+app.use("/api/bookRents/searchByBook", bookRentRouter);
+app.use("/api/bookRents/addBookRent", bookRentRouter);
+app.use("/api/bookRents/update", bookRentRouter);
+app.use("/api/bookRents/delete", bookRentRouter);
 
 
 

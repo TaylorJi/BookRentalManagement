@@ -1,8 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
-const today = new Date();
-const oneWeekFromToday = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-const returnDate = oneWeekFromToday.toISOString();
+// const today = new Date();
+// const oneWeekFromToday = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+// const returnDate = oneWeekFromToday.toISOString();
+const moment = require("moment-timezone");
 
 let bookRentSchema = new mongoose.Schema({
     customer_ID: {
@@ -17,12 +18,12 @@ let bookRentSchema = new mongoose.Schema({
     },
     borrow_date: {
         type: Date,
-        default: today.toISOString(),
+        default: ()=> moment().tz("America/Vancouver").toDate(),
         required: true
     },
     return_date: {
         type: Date,
-        default: returnDate,
+        default: ()=> moment().tz("America/Vancouver").add(1, 'week').toDate(),
         require: true
     },
     late_fee: {

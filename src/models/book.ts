@@ -14,13 +14,32 @@ let bookSchema = new mongoose.Schema({
     },
     rental_duration: {
         type: Number,
-        required: true
+        required: false
     },
     is_available: {
         type: Boolean,
         default: true
     }
 
+})
+
+bookSchema.pre("save", async function (next) {
+    const book = this;
+
+    if(book.genre){
+        const genreVal = await mongoose.model("Genre").findById(book.genre);
+        if(!genreVal){
+            return next(new Error("Genre not found"));
+        } else {
+            if (genreVal === "신간한국소설") {
+                book.rental_duration = 7;
+            } else if (genreVal === "만화") {
+                book.rental_duration = 7;
+            } else {
+                book.rental_duration = 14;
+            }
+        }
+    }
 })
 
 

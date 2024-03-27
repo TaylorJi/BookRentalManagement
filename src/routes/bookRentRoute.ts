@@ -90,10 +90,11 @@ bookRentRouter.get('/searchByCustomer/:id', async (req, res) => {
 
 
 // add a bookRent
+// insert one param that tells about the genre of the book, based on the genre, the return date will be set
 bookRentRouter.post('/', async (req: Request, res: Response) => {
     try {
         const {book_ID, customer_ID} = req.body;
-        const book = await Book.findById(book_ID);
+        const book = await Book.findById(book_ID).populate('genre');
         if (!book) {
             return res.status(404).send('Book not found');
         }
@@ -116,7 +117,9 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
         await book.save();
         await bookRent.save();
         const borrowDateVancouver = moment(bookRent.borrow_date).tz('America/Vancouver').format();
-        const returnDateVancouver = bookRent.return_date ? moment(bookRent.return_date).tz('America/Vancouver').format() : null;
+        const returnDateVancouver = moment(bookRent.borrow_date).tz('America/Vancouver').add(book.rental_duration, 'days').format();
+
+        // const returnDateVancouver = bookRent.return_date ? moment(bookRent.return_date).tz('America/Vancouver').format() : null;
         const responseObj = {
             ...bookRent.toObject(),
             borrow_date: borrowDateVancouver,

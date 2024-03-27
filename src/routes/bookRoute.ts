@@ -57,11 +57,10 @@ bookRouter.get('/', async (req: Request, res: Response) => {
   // add a book
   bookRouter.post('/addBook', async (req: Request, res: Response) => {
     try {
-        const {title, genre, rental_duration} = req.body;
+        const {title, genre} = req.body;
       const book = new Book({
         title,
         genre,
-        rental_duration
       });
   
       const savedBook = await book.save();

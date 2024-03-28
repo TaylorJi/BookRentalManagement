@@ -7,6 +7,8 @@ import { genreRouter } from "./routes/genreRoute";
 import { bookRentRouter } from "./routes/bookRentRoute";
 dotenv.config();
 const app = express();
+const cors = require("cors");
+app.use(cors());
 app.use(express.json()); // store the result in req.body
 
 const port = process.env.PORT || 3000;

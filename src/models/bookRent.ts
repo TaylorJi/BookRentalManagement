@@ -26,6 +26,10 @@ let bookRentSchema = new mongoose.Schema({
         default: ()=> moment().tz("America/Vancouver").add(1, 'week').toDate(),
         require: true
     },
+    rent_fee: {
+        type: Number,
+        required: true
+    },
     late_fee: {
         type: Number,
         required: false

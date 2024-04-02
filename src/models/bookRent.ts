@@ -28,7 +28,7 @@ let bookRentSchema = new mongoose.Schema({
     },
     rent_fee: {
         type: Number,
-        required: true
+        required: false
     },
     late_fee: {
         type: Number,

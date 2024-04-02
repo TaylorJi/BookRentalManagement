@@ -111,7 +111,8 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
         const bookRent = new BookRent({
             book_ID,
             customer_ID,
-            borrow_date: new Date()
+            borrow_date: new Date(),
+            rent_fee: book.rent_fee
         });
         book.is_available = false; // setting the book as unavailable
         await book.save();

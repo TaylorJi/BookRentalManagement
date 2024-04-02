@@ -5,15 +5,6 @@ import { Book } from "../models/book";
 export const bookRouter = Router();
 
 // get all books
-// bookRouter.get('/books', async (req, res) => {
-//     try {
-//         const books = await Book.find({}).populate('genre', 'genre'); // 'name' is the field you want from the Genre model
-//         res.json(books);
-//     } catch (error) {
-//         console.error('Error fetching books:', error);
-//         res.status(500).send('Error fetching books');
-//     }
-// });
 bookRouter.get("/", async (req: Request, res: Response) => {
   console.log("Fetching books from the database");
   try {
@@ -92,8 +83,8 @@ bookRouter.post("/addBook", async (req: Request, res: Response) => {
 });
 
 // update a book
-bookRouter.put("/update/:id", async (req: Request, res: Response) => {
-  const { id } = req.params;
+bookRouter.put("/:id", async (req: Request, res: Response) => {
+    const { id } = req.params;
   const { title, genre, is_available } = req.body;
   console.log("Updating book from the database");
   if (id === undefined || id === "" || typeof id !== "string") {

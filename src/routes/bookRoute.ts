@@ -4,12 +4,12 @@ import { Book } from "../models/book";
 
 export const bookRouter = Router();
 
-// get all books
+// get all book
 bookRouter.get("/", async (req: Request, res: Response) => {
   console.log("Fetching books from the database");
   try {
     Book.find({})
-      .populate("genre", "genre")
+    .populate("book_type")
       .exec()
       .then((books) => {
         console.log(books);
@@ -63,10 +63,11 @@ bookRouter.get("/search", async (req: Request, res: Response) => {
 // add a book
 bookRouter.post("/addBook", async (req: Request, res: Response) => {
   try {
-    const { title, genre } = req.body;
+    const { title, book_type } = req.body;
     const book = new Book({
       title,
-      genre,
+      book_type,
+      is_available: true,
     });
 
     const savedBook = await book.save();
@@ -85,7 +86,7 @@ bookRouter.post("/addBook", async (req: Request, res: Response) => {
 // update a book
 bookRouter.put("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
-  const { title, genre, is_available } = req.body;
+  const { title, type } = req.body;
   console.log("Updating book from the database");
   if (id === undefined || id === "" || typeof id !== "string") {
     res.status(400).send("Invalid id");
@@ -98,8 +99,7 @@ bookRouter.put("/:id", async (req: Request, res: Response) => {
       return;
     }
     book.title = title;
-    book.genre = genre;
-    book.is_available = is_available;
+    book.book_type = type;
     const updatedBook = await book.save();
     console.log("Book updated successfully");
     res.status(200).json({

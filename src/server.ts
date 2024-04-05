@@ -5,6 +5,9 @@ import { bookRouter } from "./routes/bookRoute"; // ts style import
 import { customerRouter } from "./routes/customerRoute";
 import { genreRouter } from "./routes/genreRoute";
 import { bookRentRouter } from "./routes/bookRentRoute";
+import { typeRouter } from "./routes/typeRouter";
+
+
 dotenv.config();
 const app = express();
 const cors = require("cors");
@@ -39,10 +42,14 @@ app.use("/api/customers/addCustomer", customerRouter);
 app.use("/api/customers/update", customerRouter);
 app.use("/api/customers/delete", customerRouter);
 
-app.use("/api/genres", genreRouter);
-app.use("/api/genres/search", genreRouter);
-app.use("/api/genres/addGenre", genreRouter);
-app.use("/api/genres/update", genreRouter);
+
+app.use("/api/types", typeRouter);
+app.use("/api/types/search", typeRouter);
+app.use("/api/types/addType", typeRouter);
+app.use("/api/types/update", typeRouter);
+app.use("/api/types/delete", typeRouter);
+
+
 
 app.use("/api/bookRents", bookRentRouter);
 app.use("/api/bookRents/searchByCustomer", bookRentRouter); // just add customer_ID at the end of the URL after/

@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 
 
@@ -7,62 +7,81 @@ let bookSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    genre: {
+    book_type: {
         type: Schema.Types.ObjectId,
-        ref: "Genre",
+        ref: "Type", // reference the Type model (name of the model)
         required: true
     },
-    rental_duration: {
-        type: Number,
-        required: false
-    },
+    
     is_available: {
         type: Boolean,
         default: true
-    },
-    rent_fee: {
-        type: Number,
-        required: false
     }
 
 })
 
 
-bookSchema.pre("save", async function (next) {
-    const book = this;
 
-    // Fetch the genre document if genre is an ObjectId
-    let genreVal;
-    if (typeof book.genre === 'object' && book.genre._id) {
-        genreVal = await mongoose.model("Genre").findById(book.genre._id);
-        console.log(genreVal); 
-    } else if (typeof book.genre === 'string') {
-        // If genre is a string, assume it's the genre name
-        genreVal = { genre: book.genre };
-    }
+// bookSchema.pre("save", async function (next) {
+//     const book = this;
 
-    if (!genreVal) {
-        return next(new Error("Genre not found"));
-    }
+//     // Fetch the genre document if genre is an ObjectId
+//     let typeVal;
+//     if (typeof book.type === 'object' && book.type._id) {
+//         typeVal = await mongoose.model("Type").findById(book.type._id);
+//         console.log(typeVal); 
+//     } else if (typeof book.type === 'string') {
+//         // If genre is a string, assume it's the genre name
+//         typeVal = { type: book.type };
+//     }
 
-    // Set rental_duration and rent_fee based on genre
-    switch (genreVal.genre) {
-        case "Old Book":
-            book.rental_duration = 14;
-            book.rent_fee = 3;
-            break;
-        case "New Release":
-            book.rental_duration = 7;
-            book.rent_fee = 5;
-            break;
-        // Add more cases as needed for different genres
-        default:
-            book.rental_duration = 7;  // Default value
-            book.rent_fee = 4;         // Default value
-    }
+//     if (!typeVal) {
+//         return next(new Error("Type not found"));
+//     } else {
+//         book.rental_duration = typeVal.duration;
+//         book.rent_fee = typeVal.fee;
+//     }
 
-    next();
-});
+
+//     next();
+// });
+
+
+// bookSchema.pre("save", async function (next) {
+//     const book = this;
+
+//     // Fetch the genre document if genre is an ObjectId
+//     let genreVal;
+//     if (typeof book.genre === 'object' && book.genre._id) {
+//         genreVal = await mongoose.model("Genre").findById(book.genre._id);
+//         console.log(genreVal); 
+//     } else if (typeof book.genre === 'string') {
+//         // If genre is a string, assume it's the genre name
+//         genreVal = { genre: book.genre };
+//     }
+
+//     if (!genreVal) {
+//         return next(new Error("Genre not found"));
+//     }
+
+//     // Set rental_duration and rent_fee based on genre
+//     switch (genreVal.genre) {
+//         case "Old Book":
+//             book.rental_duration = 14;
+//             book.rent_fee = 3;
+//             break;
+//         case "New Release":
+//             book.rental_duration = 7;
+//             book.rent_fee = 5;
+//             break;
+//         // Add more cases as needed for different genres
+//         default:
+//             book.rental_duration = 7;  // Default value
+//             book.rent_fee = 4;         // Default value
+//     }
+
+//     next();
+// });
 // bookSchema.pre("save", async function (next) {
 //     const book = this;
 

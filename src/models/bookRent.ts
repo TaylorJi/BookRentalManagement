@@ -11,28 +11,24 @@ let bookRentSchema = new mongoose.Schema({
         ref: "Customer",
         required: true
     },
-    book_ID: {
-        type: Schema.Types.ObjectId,
-        ref: "Book",
-        required: true
-    },
+    books: [],
     borrow_date: {
         type: Date,
         default: ()=> moment().tz("America/Vancouver").toDate(),
         required: true
     },
-    return_date: {
-        type: Date,
-        default: ()=> moment().tz("America/Vancouver").add(1, 'week').toDate(),
-        require: true
-    },
-    rent_fee: {
+    total_rent_fee: { // total rent_fee for this rent transaction
         type: Number,
         required: false
     },
     late_fee: {
         type: Number,
         required: false
+    },
+    status: {
+        type: String,
+        enum: ["Borrowed", "Returned", "Overdue"],
+        default: "Borrowed"
     }
 
 })

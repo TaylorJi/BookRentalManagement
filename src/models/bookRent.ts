@@ -11,7 +11,7 @@ let bookRentSchema = new mongoose.Schema({
         ref: "Customer",
         required: true
     },
-    books: [],
+    borrowed_books: [],
     borrow_date: {
         type: Date,
         default: ()=> moment().tz("America/Vancouver").toDate(),
@@ -29,8 +29,11 @@ let bookRentSchema = new mongoose.Schema({
         type: String,
         enum: ["Borrowed", "Returned", "Overdue"],
         default: "Borrowed"
-    }
-
+    },
+    note: {
+        type: String,
+        required: false
+    },
 })
 
 

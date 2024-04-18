@@ -86,7 +86,7 @@ bookRouter.post("/addBook", async (req: Request, res: Response) => {
 // update a book
 bookRouter.put("/:id", async (req: Request, res: Response) => {
     const { id } = req.params;
-  const { title, type } = req.body;
+  const { title, book_type } = req.body;
   console.log("Updating book from the database");
   if (id === undefined || id === "" || typeof id !== "string") {
     res.status(400).send("Invalid id");
@@ -99,7 +99,7 @@ bookRouter.put("/:id", async (req: Request, res: Response) => {
       return;
     }
     book.title = title;
-    book.book_type = type;
+    book.book_type = book_type;
     const updatedBook = await book.save();
     console.log("Book updated successfully");
     res.status(200).json({

@@ -39,7 +39,6 @@ bookRentRouter.get('/', async (req, res) => {
     try {
         // Populate both book_ID and customer_ID to fetch the related documents
         const bookRents = await BookRent.find({})
-            .populate('book_ID') 
             .populate('customer_ID'); 
 
         console.log(`Found ${bookRents.length} bookRents`);
@@ -142,25 +141,22 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
             // Calculate and update the total fee
             totalFee += book.book_type.fee;
             book.is_available = false; // Set the book as unavailable
+            await Book.findById(bookData).updateOne({ is_available: false }); // update the book status to unavailable
             const returnDateVancouver = moment().tz('America/Vancouver').add(book.book_type.duration, 'days').format();
             borrowBooks.push({ id: book._id, title: book.title, fee: book.book_type.fee, duration: book.book_type.duration, return_date: returnDateVancouver });
 
-
-
-
-
-            // Add logic to handle book rental or other operations as needed
         }
 
         // Create a new book rental record
         const bookRental = new BookRent({
             customer_ID,
-            books: borrowBooks,
+            borrowed_books: borrowBooks,
             borrow_date: moment().tz('America/Vancouver'),
             total_rent_fee: totalFee
         });
 
         const savedBookRent = await bookRental.save();
+        console.log(savedBookRent);
 
 
   

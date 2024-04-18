@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { bookRouter } from "./routes/bookRoute"; // ts style import
 import { customerRouter } from "./routes/customerRoute";
-import { genreRouter } from "./routes/genreRoute";
 import { bookRentRouter } from "./routes/bookRentRoute";
 import { typeRouter } from "./routes/typeRouter";
 

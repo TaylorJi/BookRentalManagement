@@ -12,8 +12,13 @@ customerRouter.get('/', async (req: Request, res: Response) => {
     console.log('Fetching books from the database');
     try {
       const customers = await Customer.find({});
-      console.log(`Found ${customers.length} books`);
-      res.status(200).json(customers);
+      if (customers.length === 0) {
+        res.status(404).send('No customer found');
+        return;
+      } else {
+        res.status(200).json(customers);
+      }
+
     } catch (error) {
         if (error instanceof Error) {
             console.error('Error while fetching listings:', error);

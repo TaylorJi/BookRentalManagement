@@ -16,6 +16,10 @@ let bookSchema = new mongoose.Schema({
     is_available: {
         type: Boolean,
         default: true
+    },
+    borrow_count: {
+        type: Number,
+        default: 0
     }
 
 })

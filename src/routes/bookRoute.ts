@@ -31,7 +31,7 @@ bookRouter.get("/", async (req: Request, res: Response) => {
 });
 
 // search by title
-bookRouter.get("/search", async (req: Request, res: Response) => {
+bookRouter.get("/searchTitle", async (req: Request, res: Response) => {
   const { title } = req.query; // get the title from the query
   console.log("Fetching books from the database");
   if (title === undefined || title === "" || typeof title !== "string") {
@@ -59,6 +59,46 @@ bookRouter.get("/search", async (req: Request, res: Response) => {
     }
   }
 });
+
+// search by id
+bookRouter.get("/searchId", async (req: Request, res: Response) => {
+  const { id } = req.query;
+  console.log("Fetching book from the database");
+  if (id === undefined || id === "" || typeof id !== "string") {
+    res.status(400).send("Invalid id");
+    return;
+  }
+  try {
+    const books = await Book.aggregate([
+      {
+        $project: {
+          stringId: { $toString: "$_id" }, // Convert ObjectId to string
+          title: 1, // Include other fields you might need
+          author: 1,
+        }
+      },
+      {
+        $match: {
+          stringId: { $regex: id + '$' } // Apply regex on the string representation of the ObjectId
+        }
+      }
+    ]);
+
+    if (!books.length) {
+      res.status(404).send("Book not found");
+      return;
+    }
+
+    res.status(200).json({
+      message: `Found books matching ID pattern ${id}`,
+      books,
+    });
+  } catch (error) {
+    console.error("Error while fetching listings:", error);
+    res.status(500).send("Error while fetching listings" + (error instanceof Error ? error.message : ""));
+  }
+});
+
 
 // add a book
 bookRouter.post("/addBook", async (req: Request, res: Response) => {

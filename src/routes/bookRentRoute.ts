@@ -129,28 +129,34 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
 
         // Iterate through each book in the request
         for (const bookData of books) {
-            console.log(bookData)
+            console.log(bookData);
+            console.log(bookData.book_id);
 
             // Check if the book exists
-            const book = await Book.findById(bookData).populate('book_type') as Book;
+            const book = await Book.findById(bookData.book_id).populate('book_type') as Book;
             if (!book) {
                 return res.status(404).send(`Book with ID ${bookData} not found`);
             } else if (!book.is_available) {
                 return res.status(404).send(`Book with ID ${bookData} is not available`);
             }
 
+            const duration = bookData.duration;
+            console.log("duration is:" + duration);
+
+            const fee = bookData.fee;
+            console.log("fee is:" + fee);
+
             // Calculate and update the total fee
-            totalFee += book.book_type.fee;
+            totalFee += fee;
             book.is_available = false; // Set the book as unavailable
             book.borrow_count += 1; // Increment the borrow count
 
-            await Book.findByIdAndUpdate(bookData, {
+            await Book.findByIdAndUpdate(bookData.book_id, {
                 $set: { is_available: false },
                 $inc: { borrow_count: 1 }
             });
-            // await Book.findById(bookData).updateMany({ is_available: false, }); // update the book status to unavailable
-            const returnDateVancouver = moment().tz('America/Vancouver').add(book.book_type.duration, 'days').format();
-            borrowBooks.push({ id: book._id, title: book.title, fee: book.book_type.fee, duration: book.book_type.duration, return_date: returnDateVancouver });
+            const returnDateVancouver = moment().tz('America/Vancouver').add(duration, 'days').format();
+            borrowBooks.push({ id: book._id, title: book.title, fee: book.book_type.fee, duration: duration, return_date: returnDateVancouver });
 
         }
 

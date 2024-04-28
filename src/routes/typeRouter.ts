@@ -52,6 +52,33 @@ typeRouter.get('/', async (req: Request, res: Response) => {
         }
   });
 
+
+  // search by id
+    typeRouter.get('/id', async (req: Request, res: Response) => {
+        const {id} = req.query; // get the title from the query
+        console.log('Fetching types from the database');
+        if (id === undefined || id === '' || typeof id !== 'string') {
+            res.status(400).send('Invalid title');
+            return;
+            }
+            try {
+                const types = await Type.findById(id);
+                if (types === null) {
+                    res.status(404).send('Book not found');
+                    return;
+                }
+                res.status(200).json(types);
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error('Error while fetching listings:', error);
+                    res.status(500).send('Error while fetching listings' + error);
+                } else {
+                    console.error('Error while fetching listings:', error);
+                    res.status(500).send('Error while fetching listings');
+                }
+            }
+    });
+
   // add a type
   typeRouter.post('/', async (req: Request, res: Response) => {
     try {

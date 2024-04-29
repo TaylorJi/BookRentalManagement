@@ -82,11 +82,12 @@ typeRouter.get('/', async (req: Request, res: Response) => {
   // add a type
   typeRouter.post('/', async (req: Request, res: Response) => {
     try {
-        const {name, fee, duration} = req.body;
+        const {name, fee, duration, late_fee} = req.body;
       const newtype = new Type({
         name,
         fee,
-        duration
+        duration,
+        late_fee
       });
   
       const typeToAdd = await newtype.save();

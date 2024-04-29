@@ -14,6 +14,10 @@ let typeSchema = new mongoose.Schema({
     duration: {
         type: Number,
         required: true
+    },
+    late_fee: {
+        type: Number,
+        required: true
     }
   
 

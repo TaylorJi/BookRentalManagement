@@ -58,18 +58,18 @@ bookRentRouter.get('/', async (req, res) => {
     }
 });
 
-// search by book_id
+
 bookRentRouter.get('/searchByBook/:id', async (req, res) => {
-    const book_id = req.params.id; // Use req.params for route parameters
+    const book_id = req.params.id;
     console.log('Fetching bookRents for book ID:', book_id);
-    if (!book_id) {
-        res.status(400).send('Invalid book ID');
-        return;
-    }
+
+
+
     try {
-        const bookRents = await BookRent.find({ book_ID: book_id })
+        // Update the query to match the nested structure
+        const bookRents = await BookRent.find({ 'borrowed_books.id': book_id })
             .populate('customer_ID', 'name')
-            .populate('book_ID', 'title');
+        console.log(bookRents);
 
         console.log(`Found ${bookRents.length} bookRents`);
         if (bookRents.length === 0) {
@@ -78,10 +78,36 @@ bookRentRouter.get('/searchByBook/:id', async (req, res) => {
         }
         res.status(200).json(bookRents);
     } catch (error) {
-        console.error('Error while fetching listings:', error);
-        res.status(500).send('Error while fetching listings' + error);
+        console.error('Error while fetching bookRents:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
+
+
+// // search by book_id
+// bookRentRouter.get('/searchByBook/:id', async (req, res) => {
+//     const book_id = req.params.id; // Use req.params for route parameters
+//     console.log('Fetching bookRents for book ID:', book_id);
+//     if (!book_id) {
+//         res.status(400).send('Invalid book ID');
+//         return;
+//     }
+//     try {
+//         const bookRents = await BookRent.find({ 'borrowed_books.id': book_id })
+//             .populate('customer_ID', 'name')
+//             .populate('borrowed_books.id', 'title fee duration return_date');
+
+//         console.log(`Found ${bookRents.length} bookRents`);
+//         if (bookRents.length === 0) {
+//             res.status(404).send('BookRent not found');
+//             return;
+//         }
+//         res.status(200).json(bookRents);
+//     } catch (error) {
+//         console.error('Error while fetching listings:', error);
+//         res.status(500).send('Error while fetching listings' + error);
+//     }
+// });
 
 
 
@@ -96,7 +122,7 @@ bookRentRouter.get('/searchByCustomer/:id', async (req, res) => {
     try {
         const bookRents = await BookRent.find({ customer_ID: customer_ID })
             .populate('customer_ID', 'name')
-            .populate('book_ID', 'title');
+            .populate('borrowed_books.id', 'title');
 
         console.log(`Found ${bookRents.length} bookRents`);
         if (bookRents.length === 0) {
@@ -109,6 +135,7 @@ bookRentRouter.get('/searchByCustomer/:id', async (req, res) => {
         res.status(500).send('Error while fetching listings' + error);
     }
 });
+
 
 
 // add a bookRent, this is for check out a book

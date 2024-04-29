@@ -1,9 +1,21 @@
 import mongoose, { Schema } from "mongoose";
+import { Book } from "./book";
 
 // const today = new Date();
 // const oneWeekFromToday = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
 // const returnDate = oneWeekFromToday.toISOString();
 const moment = require("moment-timezone");
+
+const borrowedBookSchema = new Schema({
+    id: {
+        type: Schema.Types.ObjectId, // Assuming 'id' refers to a Book model's ObjectId
+        ref: "Book"                  // Reference to the Book model if you want to populate this later
+    },
+    title: String,
+    fee: Number,
+    duration: Number,
+    return_date: Date
+});
 
 let bookRentSchema = new mongoose.Schema({
     customer_ID: {
@@ -11,7 +23,7 @@ let bookRentSchema = new mongoose.Schema({
         ref: "Customer",
         required: true
     },
-    borrowed_books: [],
+    borrowed_books: [borrowedBookSchema],
     borrow_date: {
         type: Date,
         default: ()=> moment().tz("America/Vancouver").toDate(),

@@ -62,9 +62,10 @@ bookRouter.get("/searchTitle", async (req: Request, res: Response) => {
 });
 
 // search by id
-bookRouter.get("/searchId", async (req: Request, res: Response) => {
+bookRouter.get("/searchById", async (req: Request, res: Response) => {
   const { id } = req.query;
-  console.log("Fetching book from the database");
+  console.log("Fetching book from the database by book ID");
+  console.log(id);
   if (id === undefined || id === "" || typeof id !== "string") {
     res.status(400).send("Invalid id");
     return;
@@ -76,11 +77,14 @@ bookRouter.get("/searchId", async (req: Request, res: Response) => {
           stringId: { $toString: "$_id" }, // Convert ObjectId to string
           title: 1, // Include other fields you might need
           author: 1,
+          book_type: 1,
+          is_available: 1,
+          borrow_count: 1,
         }
       },
       {
         $match: {
-          stringId: { $regex: id + '$' } // Apply regex on the string representation of the ObjectId
+          stringId: { $regex: new RegExp(id + '$') } // Apply regex on the string representation of the ObjectId
         }
       }
     ]);

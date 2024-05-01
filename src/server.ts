@@ -33,7 +33,7 @@ mongoose
 app.use("/api/books", bookRouter);
 app.use("/api/books/search", bookRouter);
 app.use("/api/books/searchByTitle", bookRouter);
-app.use("/api/books/searchId", bookRouter);
+app.use("/api/books/searchById", bookRouter);
 app.use("/api/books/addBook", bookRouter);
 app.use("/api/books/update", bookRouter);
 app.use("/api/books/delete", bookRouter);

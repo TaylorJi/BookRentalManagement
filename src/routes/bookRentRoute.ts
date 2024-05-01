@@ -63,8 +63,6 @@ bookRentRouter.get('/searchByBook/:id', async (req, res) => {
     const book_id = req.params.id;
     console.log('Fetching bookRents for book ID:', book_id);
 
-
-
     try {
         // Update the query to match the nested structure
         const bookRents = await BookRent.find({ 'borrowed_books.id': book_id })

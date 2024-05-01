@@ -34,6 +34,7 @@ bookRouter.get("/", async (req: Request, res: Response) => {
 bookRouter.get("/searchTitle", async (req: Request, res: Response) => {
   const { title } = req.query; // get the title from the query
   console.log("Fetching books from the database");
+  console.log(title);
   if (title === undefined || title === "" || typeof title !== "string") {
     res.status(400).send("Invalid title");
     return;

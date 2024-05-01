@@ -1,9 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import { Book } from "./book";
 
-// const today = new Date();
-// const oneWeekFromToday = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
-// const returnDate = oneWeekFromToday.toISOString();
 const moment = require("moment-timezone");
 
 const borrowedBookSchema = new Schema({

@@ -5,6 +5,7 @@ import { bookRouter } from "./routes/bookRoute"; // ts style import
 import { customerRouter } from "./routes/customerRoute";
 import { bookRentRouter } from "./routes/bookRentRoute";
 import { typeRouter } from "./routes/typeRouter";
+import { bookReturnRouter } from "./routes/bookReturnRoute";
 
 
 dotenv.config();
@@ -31,6 +32,8 @@ mongoose
 // routuers 
 app.use("/api/books", bookRouter);
 app.use("/api/books/search", bookRouter);
+app.use("/api/books/searchByTitle", bookRouter);
+app.use("/api/books/searchId", bookRouter);
 app.use("/api/books/addBook", bookRouter);
 app.use("/api/books/update", bookRouter);
 app.use("/api/books/delete", bookRouter);
@@ -56,6 +59,9 @@ app.use("/api/bookRents/searchByBook", bookRentRouter); // just add book_ID at t
 app.use("/api/bookRents/addBookRent", bookRentRouter);
 app.use("/api/bookRents/update", bookRentRouter);
 app.use("/api/bookRents/delete", bookRentRouter);
+
+app.use("/api/bookReturns", bookReturnRouter);
+app.use("/api/bookReturns/bookReturn", bookReturnRouter);
 
 
 

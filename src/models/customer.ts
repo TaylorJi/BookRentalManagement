@@ -1,5 +1,12 @@
 import mongoose, { Schema } from "mongoose";
 
+const borrowedBookSchema = new Schema({
+    id: {
+        type: Schema.Types.ObjectId, // Assuming 'id' refers to a Book model's ObjectId
+        ref: "Book"                  // Reference to the Book model if you want to populate this later
+    },
+    title: String
+});
 
 
 let customerSchema = new mongoose.Schema({
@@ -22,6 +29,9 @@ let customerSchema = new mongoose.Schema({
     late_fee: {
         type: Number,
         required: false
+    },
+    rented_books: {
+        type: borrowedBookSchema
     }
 
 })

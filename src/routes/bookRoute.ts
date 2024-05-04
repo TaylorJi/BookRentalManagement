@@ -108,11 +108,12 @@ bookRouter.get("/searchById", async (req: Request, res: Response) => {
 // add a book
 bookRouter.post("/addBook", async (req: Request, res: Response) => {
   try {
-    const { title, book_type } = req.body;
+    const { title, book_type, price} = req.body;
     const book = new Book({
       title,
       book_type,
       is_available: true,
+      price
     });
 
     const savedBook = await book.save();

@@ -176,6 +176,13 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
             book.is_available = false; // Set the book as unavailable
             book.borrow_count += 1; // Increment the borrow count
 
+            const updatedCustomer = await Customer.findByIdAndUpdate(
+                customer_ID,
+                { $push: { rented_books: book } },
+                { new: true } // To return the updated document
+            );
+            console.log(updatedCustomer);
+
             await Book.findByIdAndUpdate(bookData.book_id, {
                 $set: { is_available: false },
                 $inc: { borrow_count: 1 }

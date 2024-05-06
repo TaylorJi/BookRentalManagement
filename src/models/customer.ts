@@ -30,9 +30,7 @@ let customerSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    rented_books: {
-        type: borrowedBookSchema
-    }
+    rented_books: [borrowedBookSchema]
 
 })
 

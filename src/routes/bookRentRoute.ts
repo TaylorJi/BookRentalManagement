@@ -182,6 +182,7 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
                 { new: true } // To return the updated document
             );
             console.log(updatedCustomer);
+        
 
             await Book.findByIdAndUpdate(bookData.book_id, {
                 $set: { is_available: false },

@@ -82,33 +82,6 @@ bookRentRouter.get('/searchByBook/:id', async (req, res) => {
 });
 
 
-// // search by book_id
-// bookRentRouter.get('/searchByBook/:id', async (req, res) => {
-//     const book_id = req.params.id; // Use req.params for route parameters
-//     console.log('Fetching bookRents for book ID:', book_id);
-//     if (!book_id) {
-//         res.status(400).send('Invalid book ID');
-//         return;
-//     }
-//     try {
-//         const bookRents = await BookRent.find({ 'borrowed_books.id': book_id })
-//             .populate('customer_ID', 'name')
-//             .populate('borrowed_books.id', 'title fee duration return_date');
-
-//         console.log(`Found ${bookRents.length} bookRents`);
-//         if (bookRents.length === 0) {
-//             res.status(404).send('BookRent not found');
-//             return;
-//         }
-//         res.status(200).json(bookRents);
-//     } catch (error) {
-//         console.error('Error while fetching listings:', error);
-//         res.status(500).send('Error while fetching listings' + error);
-//     }
-// });
-
-
-
 // search by customer_id
 bookRentRouter.get('/searchByCustomer/:id', async (req, res) => {
     const customer_ID = req.params.id; // Use req.params for route parameters

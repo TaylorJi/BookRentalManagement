@@ -2,8 +2,8 @@ import mongoose, { Schema } from "mongoose";
 
 const borrowedBookSchema = new Schema({
     id: {
-        type: Schema.Types.ObjectId, // Assuming 'id' refers to a Book model's ObjectId
-        ref: "Book"                  // Reference to the Book model if you want to populate this later
+        type: Schema.Types.ObjectId, 
+        ref: "Book"                  
     },
     title: String
 });

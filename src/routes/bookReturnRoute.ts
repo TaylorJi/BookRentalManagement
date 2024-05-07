@@ -45,7 +45,7 @@ bookReturnRouter.post("/bookReturn", async (req: Request, res: Response) => {
             }
 
             if (returned_books.length != bookRent.borrowed_books.length) {
-                status = 'Partial'; // Set to partial if counts do not match
+                status = 'Partial'; 
             }
 
             const dueDate = moment(book.return_date);

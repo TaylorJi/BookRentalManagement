@@ -54,8 +54,8 @@ app.use("/api/types/delete", typeRouter);
 
 
 app.use("/api/bookRents", bookRentRouter);
-app.use("/api/bookRents/searchByCustomer", bookRentRouter); // just add customer_ID at the end of the URL after/
-app.use("/api/bookRents/searchByBook", bookRentRouter); // just add book_ID at the end of the URL after/
+app.use("/api/bookRents/searchByCustomer", bookRentRouter);
+app.use("/api/bookRents/searchByBook", bookRentRouter); 
 app.use("/api/bookRents/addBookRent", bookRentRouter);
 app.use("/api/bookRents/update", bookRentRouter);
 app.use("/api/bookRents/delete", bookRentRouter);

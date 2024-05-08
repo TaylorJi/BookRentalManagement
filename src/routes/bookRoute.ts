@@ -64,8 +64,6 @@ bookRouter.get("/searchTitle", async (req: Request, res: Response) => {
 // search by id
 bookRouter.get("/searchById", async (req: Request, res: Response) => {
   const { id } = req.query;
-  console.log("Fetching book from the database by book ID");
-  console.log(id);
   if (id === undefined || id === "" || typeof id !== "string") {
     res.status(400).send("Invalid id");
     return;

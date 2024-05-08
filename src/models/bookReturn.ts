@@ -11,10 +11,6 @@ const returnedBookSchema = new Schema({
     return_date: {
         type: Date,
         required: true
-    },
-    is_available: {
-        type: Boolean,
-        required: true
     }
 });
 

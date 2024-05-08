@@ -28,6 +28,7 @@ interface BookType {
 
 interface Book{
     _id: string;
+    id_str: string;
     title: string;
     book_type: BookType;
     is_available: boolean;
@@ -162,7 +163,13 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
                 $inc: { borrow_count: 1 }
             });
             const returnDateVancouver = moment().tz('America/Vancouver').add(duration, 'days').format();
-            borrowBooks.push({ id: book._id, title: book.title, fee: book.book_type.fee, duration: duration, return_date: returnDateVancouver });
+            borrowBooks.push({ 
+                id: book._id, 
+                id_str: book._id.toString(),
+                title: book.title, 
+                fee: book.book_type.fee, 
+                duration: duration, 
+                return_date: returnDateVancouver });
 
         }
 
@@ -194,41 +201,31 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
 
 
 // update a bookRent
-// bookRentRouter.put('/update/:id', async (req: Request, res: Response) => {
-//     try {
-//         const {book_ID, customer_ID, borrow_date, return_date} = req.body;
-//         const bookRent = await BookRent.findById(req.params.id);
-//         if (!bookRent) {
-//             res.status(404).send('BookRent not found');
-//             return;
-//         }
-//         const book = await Book.findById(book_ID);
-//         if (!book) {
-//             res.status(404).send('Book not found');
-//             return;
-//         }
-//         const customer = await Customer.findById(customer_ID);
-//         if (!customer) {
-//             res.status(404).send('Customer not found');
-//             return;
-//         }
-//         bookRent.book_ID = book_ID;
-//         bookRent.customer_ID = customer_ID;
-//         bookRent.borrow_date = borrow_date;
-//         bookRent.return_date = return_date;
-//         await bookRent.save();
-//         book.is_available = false; // setting the book as unavailable
-//         res.status(200).json(bookRent);
-//     } catch (error) {
-//         if (error instanceof Error) {
-//             console.error('Error while fetching listings:', error);
-//             res.status(500).send('Error while fetching listings' + error);
-//         } else {
-//             console.error('Error while fetching listings:', error);
-//             res.status(500).send('Error while fetching listings');
-//         }
-//     }
-//   });
+// update books that are rented
+// status
+// and return date
+bookRentRouter.put('/update/:id', async (req: Request, res: Response) => {
+    const rent_id = req.params.id;
+    const { borrowed_books, status, return_date } = req.body;
+    console.log('Updating bookRent:', rent_id); 
+    try {
+        const bookRent = await BookRent.findById(rent_id);
+        if (!bookRent) {
+            return res.status(404).send('BookRent not found');
+        }
+        bookRent.borrowed_books = borrowed_books;
+        bookRent.status = status;
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error('Error while fetching listings:', error);
+            res.status(500).send('Error while fetching listings' + error);
+        } else {
+            console.error('Error while fetching listings:', error);
+            res.status(500).send('Error while fetching listings');
+        }
+    }
+
+  });
 
 // delete a bookRent
 bookRentRouter.delete('/:id', async (req: Request, res: Response) => {

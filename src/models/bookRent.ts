@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { Book } from "./book";
 
 const moment = require("moment-timezone");
 
@@ -8,10 +7,16 @@ const borrowedBookSchema = new Schema({
         type: Schema.Types.ObjectId, // Assuming 'id' refers to a Book model's ObjectId
         ref: "Book"                  // Reference to the Book model if you want to populate this later
     },
+    id_str:String,
     title: String,
+    book_type: {
+        type: Schema.Types.ObjectId,
+        ref: "Type"
+    },
     fee: Number,
     duration: Number,
-    return_date: Date
+    return_date: Date,
+    is_available: Boolean
 });
 
 let bookRentSchema = new mongoose.Schema({

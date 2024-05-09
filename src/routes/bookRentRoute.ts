@@ -65,8 +65,9 @@ bookRentRouter.get('/searchByBook/:id', async (req, res) => {
     console.log('Fetching bookRents for book ID:', book_id);
 
     try {
+        const regex = new RegExp(book_id + '$');
         // Update the query to match the nested structure
-        const bookRents = await BookRent.find({ 'borrowed_books.id': book_id })
+        const bookRents = await BookRent.find({ 'borrowed_books.id_str': {$regex: regex} })
             .populate('customer_ID', 'name')
         console.log(bookRents);
 

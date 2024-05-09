@@ -11,7 +11,9 @@ const returnedBookSchema = new Schema({
     return_date: {
         type: Date,
         required: true
-    }
+    },
+    title: String,
+
 });
 
 let bookReturnSchema = new mongoose.Schema({

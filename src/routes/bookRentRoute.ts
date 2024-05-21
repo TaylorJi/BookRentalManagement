@@ -168,7 +168,9 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
                 id: book._id, 
                 id_str: book._id.toString(),
                 title: book.title, 
-                fee: book.book_type.fee, 
+                fee: book.book_type.fee,
+                book_type: book.book_type, 
+                is_available: false,
                 duration: duration, 
                 return_date: returnDateVancouver });
 

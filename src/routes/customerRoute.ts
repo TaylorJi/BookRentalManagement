@@ -56,10 +56,11 @@ customerRouter.get("/search", async (req: Request, res: Response) => {
 // add a customer
 customerRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const { name, contact, address, note, late_fee } = req.body;
+    const { name, contact, email, address, note, late_fee } = req.body;
     const customer = new Customer({
       name,
       contact,
+      email,
       address,
       note,
       late_fee,

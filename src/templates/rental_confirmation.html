@@ -102,10 +102,12 @@
       <p>Thank you for renting a book from us! Here are the details of your rental:</p>
       <p>Rent date: {{ rentalDate}}</p>
       <ul>
-        {{ #each books}}
+        {{#each books}}
         <li><strong>Book Title:</strong> {{title}}</li>
         <li><strong>Rental Date:</strong> {{return_date}}</li>
         <li><strong>Due Date:</strong> {{return_date}}</li>
+        <br>
+        {{/each}}
       </ul>
       <p>We hope you enjoy reading the book. If you have any questions, feel free to contact us.</p>
       <p>Best regards,</p>

@@ -5,7 +5,6 @@ import { Request, Response } from "express";
 import { Book } from "../models/book";
 import { Customer } from "../models/customer";
 import { BookRent } from "../models/bookRent";
-import { send } from "process";
 import { sendEmail } from "../services/sendEmail";
 
 export const bookRentRouter = express.Router();
@@ -197,7 +196,6 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
                 customerName: customer.name,
                 books: borrowBooks,
                 rentalDate: moment().tz('America/Vancouver').format(),
-                dueDate: moment().tz('America/Vancouver').add(borrowBooks[0].duration, 'days').format('YYYY-MM-DD'),
                 companyName: 'Todays Book',
                 year: new Date().getFullYear()
             }

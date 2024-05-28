@@ -1,13 +1,17 @@
 import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 // Create a transport for sending emails (replace with your email service's data)
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use your email service
-  host: 'smtp.gmail.com',
+  host:  process.env.EMAIL_HOST,
     port: 587,
   auth: {
-    user: 'taylor.ji719@gmail.com', // Your email address
-    pass: 'hblkrtksnlqetsrf', // Your password
+    user: process.env.EMAIL_USERNAME, // Your email address
+    pass: process.env.EMAIL_PASSWORD, // Your password
   },
 }); 
 
@@ -16,7 +20,6 @@ const transporter = nodemailer.createTransport({
 
 // Set email options
 const mailOptions = {
-    from: 'taylor.sangwoo.ji@gmail.com', // Sender
     to: 'taylor.ji719@gmail.com', // Recipient
     subject: 'Test Email', // Email subject
     html: '<p>Email Content</p>'

@@ -1,0 +1,118 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>Rental Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .container {
+      width: 80%;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .header {
+      text-align: center;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-bottom: 1px solid #ddd;
+    }
+    .content {
+      margin: 20px 0;
+    }
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-top: 1px solid #ddd;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Rental Confirmation</h2>
+    </div>
+    <div class="content">
+      <p>Dear [Customer Name],</p>
+      <p>Thank you for renting a book from us! Here are the details of your rental:</p>
+      <ul>
+        <li><strong>Book Title:</strong> [Book Title]</li>
+        <li><strong>Author:</strong> [Author]</li>
+        <li><strong>Rental Date:</strong> [Rental Date]</li>
+        <li><strong>Due Date:</strong> [Due Date]</li>
+      </ul>
+      <p>We hope you enjoy reading the book. If you have any questions, feel free to contact us.</p>
+      <p>Best regards,</p>
+      <p>[Your Company Name]</p>
+    </div>
+    <div class="footer">
+      <p>&copy; [Year] [Your Company Name]. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rental Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .container {
+      width: 80%;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .header {
+      text-align: center;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-bottom: 1px solid #ddd;
+    }
+    .content {
+      margin: 20px 0;
+    }
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-top: 1px solid #ddd;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Rental Confirmation</h2>
+    </div>
+    <div class="content">
+      <p>Dear {{customerName}},</p>
+      <p>Thank you for renting a book from us! Here are the details of your rental:</p>
+      <ul>
+        <li><strong>Book Title:</strong> {{bookTitle}}</li>
+        <li><strong>Author:</strong> {{author}}</li>
+        <li><strong>Rental Date:</strong> {{rentalDate}}</li>
+        <li><strong>Due Date:</strong> {{dueDate}}</li>
+      </ul>
+      <p>We hope you enjoy reading the book. If you have any questions, feel free to contact us.</p>
+      <p>Best regards,</p>
+      <p>{{companyName}}</p>
+    </div>
+    <div class="footer">
+      <p>&copy; {{year}} {{companyName}}. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

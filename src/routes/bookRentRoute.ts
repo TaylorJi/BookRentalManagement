@@ -5,6 +5,8 @@ import { Request, Response } from "express";
 import { Book } from "../models/book";
 import { Customer } from "../models/customer";
 import { BookRent } from "../models/bookRent";
+import { send } from "process";
+import { sendEmail } from "../services/sendEmail";
 
 export const bookRentRouter = express.Router();
 const moment = require("moment-timezone");
@@ -187,6 +189,20 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
         const savedBookRent = await bookRental.save();
         console.log(savedBookRent);
 
+        await sendEmail(
+            customer.email,
+            'Rental Confirmation',
+            'rental_confirmation',
+            { 
+                customerName: customer.name,
+                books: borrowBooks,
+                rentalDate: moment().tz('America/Vancouver').format(),
+                dueDate: moment().tz('America/Vancouver').add(borrowBooks[0].duration, 'days').format('YYYY-MM-DD'),
+                companyName: 'Todays Book',
+                year: new Date().getFullYear()
+            }
+
+        );
 
   
 

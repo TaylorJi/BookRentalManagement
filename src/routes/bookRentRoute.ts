@@ -164,7 +164,7 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
                 $set: { is_available: false },
                 $inc: { borrow_count: 1 }
             });
-            const returnDateVancouver = moment().tz('America/Vancouver').add(duration, 'days').format();
+            const returnDateVancouver = moment().tz('America/Vancouver').add(duration, 'days').format('YYYY-MM-DD');
             borrowBooks.push({ 
                 id: book._id, 
                 id_str: book._id.toString(),
@@ -195,7 +195,7 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
             { 
                 customerName: customer.name,
                 books: borrowBooks,
-                rentalDate: moment().tz('America/Vancouver').format(),
+                rentalDate: moment().tz('America/Vancouver').format("YYYY-MM-DD"),
                 companyName: 'Todays Book',
                 year: new Date().getFullYear()
             }
@@ -260,89 +260,3 @@ bookRentRouter.delete('/:id', async (req: Request, res: Response) => {
         }
     }
   });
-
-
-  // return a book
-//   bookRentRouter.put('/return/:id', async (req, res) => {
-//     try {
-//         const bookRent = await BookRent.findById(req.params.id);
-//         if (!bookRent) {
-//             return res.status(404).send('BookRent not found');
-//         }
-
-//         // Create Moment objects for now and return date in Vancouver time
-//         const nowInVancouver = moment.tz('America/Vancouver');
-//         const returnDateInVancouver = moment(bookRent.return_date).tz('America/Vancouver');
-
-//         // Set the actual return date to now
-//         bookRent.return_date = nowInVancouver.toDate();
-
-//         // Check if the book is returned late
-//         if (bookRent.return_date && returnDateInVancouver.isValid() && nowInVancouver.isAfter(returnDateInVancouver)) {
-//             const diffInDays = nowInVancouver.diff(returnDateInVancouver, 'days');
-//             const lateFee = diffInDays * 0.5; // Assuming $0.5 per day late fee
-//             bookRent.late_fee = lateFee;
-//         }
-
-//         await bookRent.save();
-
-//         const book = await Book.findById(bookRent.book_ID);
-//         if (!book) {
-//             return res.status(404).send('Book not found');
-//         }
-
-//         book.is_available = true; // Set the book as available
-//         await book.save();
-//         console.log(book)
-
-//         res.status(200).json(bookRent);
-//     } catch (error) {
-//         if (error instanceof Error) {
-//             console.error('Error while returning the book:', error);
-//             res.status(500).send('Error while returning the book: ' + error.message);
-//         } else {
-//             console.error('Error while returning the book:', error);
-//             res.status(500).send('Error while returning the book');
-//         }
-//     }
-// });
-
-
-// bookRentRouter.put('/return/:id', async (req: Request, res: Response) => {
-//     try {
-//         const bookRent = await BookRent.findById(req.params.id);
-//         if (!bookRent) {
-//             res.status(404).send('BookRent not found');
-//             return;
-//         }
-//         const nowInVancouver = moment.tz('America/Vancouver');
-//         const returnDateInVancouver = moment(bookRent.return_date).tz('America/Vancouver');
-//         bookRent.return_date = nowInVancouver.toDate();
-
-//         if (returnDateInVancouver.isVald() && nowInVancouver > returnDateInVancouver) {
-//             const diffInDays = nowInVancouver.diff(returnDateInVancouver, 'days');
-//             const lateFee = diffInDays * 0.5;
-//             bookRent.late_fee = lateFee;
-
-//         }
-
-//         bookRent.return_date = new Date();
-//         await bookRent.save();
-//         const book = await Book.findById(bookRent.book_ID);
-//         if (!book) {
-//             res.status(404).send('Book not found');
-//             return;
-//         }
-//         book.is_available = true; // setting the book as available
-//         await book.save();
-//         res.status(200).json(bookRent);
-//     } catch (error) {
-//         if (error instanceof Error) {
-//             console.error('Error while fetching listings:', error);
-//             res.status(500).send('Error while fetching listings' + error);
-//         } else {
-//             console.error('Error while fetching listings:', error);
-//             res.status(500).send('Error while fetching listings');
-//         }
-//     }
-//   });

@@ -32,7 +32,7 @@
     }
   </style>
 </head>
-<body>
+<!-- <body>
   <div class="container">
     <div class="header">
       <h2>Overdue Notification</h2>
@@ -57,5 +57,18 @@
       <p>&copy; [Year] [Your Company Name]. All rights reserved.</p>
     </div>
   </div>
+</body>
+</html> -->
+<body>
+  <p>Dear {{customerName}},</p>
+  <p>The following books are overdue as of {{dueDate}}:</p>
+  <ul>
+    {{#each books}}
+      <li>{{title}} (Was due: {{return_date}})</li>
+    {{/each}}
+  </ul>
+  <p>Please return them as soon as possible to avoid further late fees.</p>
+  <p>Best regards,<br>{{companyName}}</p>
+  <p>&copy; {{year}} {{companyName}}. All rights reserved.</p>
 </body>
 </html>

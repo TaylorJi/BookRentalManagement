@@ -32,7 +32,7 @@
     }
   </style>
 </head>
-<body>
+<!-- <body>
   <div class="container">
     <div class="header">
       <h2>Due Date Reminder</h2>
@@ -58,4 +58,17 @@
     </div>
   </div>
 </body>
-</html>
+</html> -->
+<body>
+    <p>Dear {{customerName}},</p>
+    <p>This is a reminder that the following books are due on {{dueDate}}:</p>
+    <ul>
+      {{#each books}}
+        <li>{{title}} (Due: {{return_date}})</li>
+      {{/each}}
+    </ul>
+    <p>Please return them by the due date to avoid any late fees.</p>
+    <p>Best regards,<br>{{companyName}}</p>
+    <p>&copy; {{year}} {{companyName}}. All rights reserved.</p>
+  </body>
+  </html>

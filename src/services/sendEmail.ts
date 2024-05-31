@@ -36,19 +36,4 @@ const sendEmail = async (to: string, subject: string, templateName: string, temp
   }
 };
 
-// // Example usage
-// sendEmail(
-//   'taylor.ji719@gmail.com', // send to
-//   'Rental Confirmation', // subject
-//   'rental_confirmation', // template name
-//   { 
-//     customerName: 'Taylor',
-//      bookTitle: '1984', 
-//      author: 'George Orwell', 
-//      rentalDate: '2024-05-01', 
-//      dueDate: '2024-06-01',
-//     year: new Date().getFullYear()}
-// );
-
-
 export { sendEmail };

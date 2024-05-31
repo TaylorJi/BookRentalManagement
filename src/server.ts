@@ -6,6 +6,8 @@ import { customerRouter } from "./routes/customerRoute";
 import { bookRentRouter } from "./routes/bookRentRoute";
 import { typeRouter } from "./routes/typeRouter";
 import { bookReturnRouter } from "./routes/bookReturnRoute";
+import "./services/reminderScheduler";
+
 
 
 dotenv.config();

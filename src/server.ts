@@ -13,7 +13,12 @@ import "./services/reminderScheduler";
 dotenv.config();
 const app = express();
 const cors = require("cors");
-app.use(cors());
+
+const corsOptions = {
+  origin: 'http://localhost:3001', // or your frontend URL
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express.json()); // store the result in req.body
 
 const port = process.env.PORT || 3000;

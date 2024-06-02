@@ -188,19 +188,39 @@ bookRentRouter.post('/', async (req: Request, res: Response) => {
         const savedBookRent = await bookRental.save();
         console.log(savedBookRent);
 
-        await sendEmail(
-            customer.email,
-            'Rental Confirmation',
-            'rental_confirmation',
-            { 
-                customerName: customer.name,
-                books: borrowBooks,
-                rentalDate: moment().tz('America/Vancouver').format("YYYY-MM-DD"),
-                companyName: 'Todays Book',
-                year: new Date().getFullYear()
-            }
+        try {
+            console.log('Sending email to:', customer.email);
+            await sendEmail(
+                customer.email,
+                'Rental Confirmation',
+                'rental_confirmation',
+                { 
+                    customerName: customer.name,
+                    books: borrowBooks,
+                    rentalDate: moment().tz('America/Vancouver').format("YYYY-MM-DD"),
+                    companyName: 'Todays Book',
+                    year: new Date().getFullYear()
+                }
+            );
+            console.log('Email sent successfully');
+        } catch (emailError) {
+            console.error('Error sending email:', emailError);
+        }
+        
 
-        );
+        // await sendEmail(
+        //     customer.email,
+        //     'Rental Confirmation',
+        //     'rental_confirmation',
+        //     { 
+        //         customerName: customer.name,
+        //         books: borrowBooks,
+        //         rentalDate: moment().tz('America/Vancouver').format("YYYY-MM-DD"),
+        //         companyName: 'Todays Book',
+        //         year: new Date().getFullYear()
+        //     }
+
+        // );
 
   
 

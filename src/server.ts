@@ -23,6 +23,15 @@ app.use(express.json()); // store the result in req.body
 
 const port = process.env.PORT || 3000;
 
+
+
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+};
+
+
 const dbUri: string =
   process.env.MONGODB_URI ??
   (function (): never {
@@ -30,7 +39,7 @@ const dbUri: string =
   })();
 
 mongoose
-  .connect(dbUri)
+  .connect(dbUri, options)
   .then(() => console.log("Database connected successfully"))
   .catch((err) => console.error("Database connection error:", err));
 

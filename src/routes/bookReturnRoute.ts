@@ -85,7 +85,7 @@ bookReturnRouter.post("/bookReturn", async (req: Request, res: Response) => {
   console.log("Processing book return...");
   const { rentalID, bookIDs } = req.body;
   let totalLateFee = 0;
-  let status = "";
+  let status = "Completed";
   const bookRent = await BookRent.findById(rentalID).populate(
     "borrowed_books.book_type"
   );
@@ -112,11 +112,6 @@ bookReturnRouter.post("/bookReturn", async (req: Request, res: Response) => {
       console.log(bookToReturn);
       if (!bookToReturn) {
         return res.status(404).json({ message: "Book not found from book ID: " + bookId });
-      }
-      if (status === "Completed") {
-        return res.status(400).json({
-          message: "Book return already processed for rental ID: " + rentalID,
-        });
       }
       const returnDate = moment(bookToReturn.return_date);
       const overdueDays = moment(currentDate).diff(returnDate, "days");

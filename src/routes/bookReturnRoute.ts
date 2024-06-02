@@ -85,7 +85,7 @@ bookReturnRouter.post("/bookReturn", async (req: Request, res: Response) => {
   console.log("Processing book return...");
   const { rentalID, bookIDs } = req.body;
   let totalLateFee = 0;
-  let status = "Completed";
+  let status = "";
   const bookRent = await BookRent.findById(rentalID).populate(
     "borrowed_books.book_type"
   );

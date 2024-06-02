@@ -113,6 +113,11 @@ bookReturnRouter.post("/bookReturn", async (req: Request, res: Response) => {
       if (!bookToReturn) {
         return res.status(404).json({ message: "Book not found from book ID: " + bookId });
       }
+      if (status === "Completed") {
+        return res.status(400).json({
+          message: "Book return already processed for rental ID: " + rentalID,
+        });
+      }
       const returnDate = moment(bookToReturn.return_date);
       const overdueDays = moment(currentDate).diff(returnDate, "days");
       const bookType = bookToReturn.book_type as unknown as BookType; // Type assertion here

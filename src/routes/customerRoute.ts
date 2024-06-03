@@ -54,7 +54,7 @@ customerRouter.get("/search", async (req: Request, res: Response) => {
 });
 
 // add a customer
-customerRouter.post("/", async (req: Request, res: Response) => {
+customerRouter.post("/addCustomer", async (req: Request, res: Response) => {
   try {
     const { name, contact, email, address, note, late_fee } = req.body;
     const customer = new Customer({

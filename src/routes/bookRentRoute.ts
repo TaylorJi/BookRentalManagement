@@ -114,7 +114,7 @@ bookRentRouter.get('/searchByCustomer/:id', async (req, res) => {
 
 // add a bookRent, this is for check out a book
 // insert one param that tells about the genre of the book, based on the genre, the return date will be set
-bookRentRouter.post('/', async (req: Request, res: Response) => {
+bookRentRouter.post('/addBookRent', async (req: Request, res: Response) => {
     let borrowBooks = [];
     try {
         const { customer_ID, books } = req.body;

@@ -15,7 +15,7 @@ const app = express();
 const cors = require("cors");
 
 const corsOptions = {
-  origin: 'https://bookrentalmanagement-frontend.onrender.com', // or your frontend URL
+  origin: process.env.FRONT_END_URL, // or your frontend URL
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
